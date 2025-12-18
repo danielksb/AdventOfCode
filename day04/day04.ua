@@ -9,14 +9,26 @@ WrappingNeighbors ← ↻Directions
 Neighbors         ← ⬚0↻Directions
 IsOneToThree      ← ×⊃(≥0)(<4)
 
-Part₁ ← (
-  Map
+RollsToRemove ← (
   ⊸Neighbors
   /+
   IsOneToThree
   ×
+)
+
+Part₁ ← (
+  Map
+  RollsToRemove
   /⊂
   /+
 )
 
-Part₁ Map
+Part₂ ← (
+  Map
+  ⊸⍥(>⊸RollsToRemove)∞
+  >
+  /⊂
+  /+
+)
+
+Part₂
