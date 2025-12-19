@@ -12,7 +12,7 @@ AllCombinations ← ˜≡(□˜↘ °□) ⊙□ ↘¯1⇡⊸⧻
 
 # Returns max voltage for a head of list
 # [3 4 5 2] -> [35]
-SingleMaxJoltage ← DigitsToNum⊂ ⊃(↙1)(⊣⍆↘1)
+SingleMaxJoltage ← SplitInput⊂ ⊃(↙1)(⊣⍆↘1)
 
 MaxJoltage ← ≡(SingleMaxJoltage °□)
 
@@ -47,7 +47,7 @@ MaxJoltageN ← (
   ⍢(CollectCandidates|⋅⋅(>₀))
 )
 
-RecursionPart₂ ← /+ ≡(DigitsToNum ⊙◌⊙◌ MaxJoltageN [] ⊙12) Joltage Input
+RecursionPart₂ ← /+ ≡(SplitInput ⊙◌⊙◌ MaxJoltageN [] ⊙12) Joltage Input
 
 Window ← ×0⇡
 
