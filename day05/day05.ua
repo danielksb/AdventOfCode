@@ -31,9 +31,24 @@ Part₁ ← (
   ⧻
 )
 
-Part₁
+RangeLength ← (-⊙) °⊟
+
+Part₂ ← (
+  Data
+  ⊙◌
+  ⍆
+  ≡(+0_1)
+  ⍜♭\↥
+  ≡RangeLength
+  /+
+)
+
+&p $"Part 01: _" Part₁
+&p $"Part 02: _" Part₂
 
 ┌─╴test
-  ˙⍤ ≍[0 1 0] (InRange [3 5] [2 3 7])
-  ˙⍤ ≍[3 5] ParseRange "3-5"
+  ⍤⤙≍ [0 1 0] (InRange [3 5] [2 3 7])
+  ⍤⤙≍ [3 5] ParseRange "3-5"
+  ⍤⤙≍ 3 RangeLength [3 6]
+  ⍤⤙≍ 0 RangeLength [5 5]
 └─╴
