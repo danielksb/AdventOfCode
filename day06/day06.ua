@@ -19,23 +19,30 @@ Part₁ ← (
   /+
 )
 
-# &p $"Part 1: _" Part₁
+&p $"Part 1: _" Part₁
 
-MaskEmptyParts ← ¬ ♭↙1 ⍉ ⊸⌕ @ 
-TrimWhitespace ← ▽⊸≠@ 
+RemoveWhitespaces ← ▽⊸≠@ 
+RemoveNaN         ← ▽⊸≠NaN
 
-SplitNewLines Input
-♭ OpsToInt ParseOps°□ SeperateOps
-:
-⍉
-≡(⍣(⋕/(⍚⊂))0 ≡(□ TrimWhitespace))
-⬚0⊜∘ ⊸≠0
-⍉
-:
-⊂
-⍉
-≡(ApplyOps)
-/+
+Part₂ ← (
+  SplitNewLines Input
+  ♭ OpsToInt ParseOps°□ SeperateOps
+  :
+  ⍉
+  # trim whitespaces and parse to number
+  # fields with whitespaces only become 0
+  ≡(⍣(⋕/(⍚⊂))0 ≡(□ ▽⊸≠@ ))
+  # partition at zeroes fill up with NaN
+  ⬚NaN⊜∘ ⊸≠0
+  ⍉
+  :
+  ⊂
+  ⍉
+  ≡(ApplyOps RemoveNaN)
+  /+
+)
+
+&p $"Part 2: _" Part₂
 
 ┌─╴test
   ⍤⤙≍ 33210 ApplyOps [1 123 45 6]
