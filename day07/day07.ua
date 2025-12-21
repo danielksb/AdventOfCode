@@ -42,6 +42,21 @@ Part₁ ← ◌∧Step °˜⊂ Data 0
 
 &p $"Part 1: _" Part₁
 
+Split₂ ← (
+  ×
+  ⊃(⬚0↻1|⬚0↻¯1)
+  +
+)
+
+Step₂ ← (
+  ⊃(Split₂|Progress)
+  +
+)
+
+Part₂ ← /+ ∧Step₂ °˜⊂ Data
+
+&p $"Part 2: _" Part₂
+
 ┌─╴test
   ⍤⤙≍ [1 0 1] Split [0 1 0] [0 1 0]
   ⍤⤙≍ [0 0 0] Split [0 1 0] [0 0 0]
