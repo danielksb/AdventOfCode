@@ -1,25 +1,35 @@
+# Experimental!
+
+Input ← (
+  $ L68
+  $ L30
+  $ R48
+  $ L5
+  $ R60
+  $ L55
+  $ L1
+  $ L99
+  $ R14
+  $ L82
+)
+
 Input ← &fras "input"
-# Input      ← "R12\r\nL2"
-TokenMask  ← ¬∊"\r\n"
-Operations ← ⊜□ ⊸TokenMask
 
-# Extract the turn direction from an operation
-# e.g. "R12" -> -1, "L2" -> 1
-Direction ← -(≠@R)⟜(=@R)⊡0
+SplitNewLines ← ⊜□ ⊸(¬∊"\r\n")
 
-# Extract rotation steps from an operation
-# e.g. "R12" -> 12, "L2" -> 2
-Rotation ← ⋕↘1
+Parse ← × ⊃(⨬(¯1|1) =@R⊡0|⋕ ↘₁)
 
-Directions ← ≡(Direction°□) Operations Input
-Rotations  ← ≡(Rotation°□) Operations Input
+Data ← ⊂50 ≡(Parse°□) SplitNewLines Input
 
-# Expand the directions and rotations into step-by-step movements
-Expand ← □⍥(⊂):[]
+CountZeroes ← /+ =0 ◿100 \+
 
-# Unboxes expanded values into a flat array
-Flatten ← ⇌ ˜∧(⊂°□)[]
+Part₁ ← CountZeroes Data
+Part₂ ← CountZeroes ▽ ⊃(⌵|±) Data
 
-&p "ZeroesPart 1: " /+ =0 ◿100 \+ ⊂50 ×Rotations Directions
+&p $"Part 1: _" Part₁
+&p $"Part 2: _" Part₂
 
-&p "ZeroesPart 2: " /+ =0 ◿100 \+ ⊂50 Flatten ≡/Expand ⍉ ⊟Rotations Directions
+┌─╴test
+  ⍤⤙≍ ¯12 Parse "L12"
+  ⍤⤙≍ 12 Parse "R12"
+└─╴
