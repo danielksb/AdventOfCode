@@ -42,14 +42,16 @@ ParseMachine₂ ← (
 # [0 0 0 1 0]
 ApplyButtons₁ ← ≡(˜⍜⊏¬⊙°□)¤
 
-ApplyButtons₂ ← ≡(˜⍜⊏(+1)⊙°□)¤
+# ApplyButtons₂ ← ≡(˜⍜⊏(+1)⊙°□)¤
+ApplyButtons₂ ← ?⊃(+1≤)((≡(˜⍜⊏(+1)⊙°□)¤)⊙⋅∘)
 
 # indicator buttons -> shortest paths
 # {0_2_3_4 2_3 0_4 0_1_2 1_2_3_4}
 # [0 0 0 1 0]
 FindMinSteps₁ ← path(ApplyButtons₁⊙⋅∘)(≍) ⊸×0
 
-FindMinSteps₂ ← path(ApplyButtons₂⊙⋅∘)(≍) ⊸×0
+# TODO: this will not work, too many paths, lin alg solver needed
+FindMinSteps₂ ← path(?ApplyButtons₂)(≍) ⊸×0
 
 Part₁ ← (
   Input
@@ -63,8 +65,8 @@ Part₁ ← (
 Part₂ ← (
   Input
   SplitNewLines
-  ≡(-1 ⧻ ⊢ FindMinSteps₂ ParseMachine₂ °□)
+  ≡(-1 ⧻ ⊢ ? FindMinSteps₂ ? ParseMachine₂ °□)
   /+
 )
 
-&p $"Part 2: _" Part₂
+# &p $"Part 2: _" Part₂
