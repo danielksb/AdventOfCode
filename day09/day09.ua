@@ -13,4 +13,6 @@ Data  ← ⊜(⊜⋕ ⊸(≠@,)) ⊸(¬∊"\r\n") Input
 
 Area ← /×+1⌵/-
 
-↙₋₁ ⍆ ≡(Area) ⧅<2 Data
+Part₁ ← ⊡¯1 ⍆ ≡(Area) ⧅<2 Data
+
+&p $"Part 1: _" Part₁
