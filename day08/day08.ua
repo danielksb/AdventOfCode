@@ -58,6 +58,29 @@ InsertIntoCircuit ← (
   MergeFindings
 )
 
+Part₁ ← (
+  ∧(InsertIntoCircuit) ShortestNConns!1000 []
+  /×↙₋₃⍆≡(⧻°□)
+)
+&p $"Part 1: _" Part₁
+
+N ← ⧻Data
+
+Loop ← (
+  ⊙°⊂                            # take next coord
+  ◡≡⌟(/↥/↥≡⌞∊°□)                 # find matching circuits
+  ⊃(⊂[]□ ◴ ˜⊂ JoinCircuits ▽|▽¬) # merge machting circuits, keep non matching circuits
+  ⊂                              # join all circuits together
+)
+
+Part₂ ← (
+  SortedPairs Data
+  ⊃{⊢}↘₁ # extract first coord into first circuit
+  ⍢(Loop|< N ⧻°□⊢)
+  /×♭↙₁⍉↙₂°□⊢
+)
+&p $"Part 2: _" Part₂
+
 ┌─╴test
   ⍤⤙≍ [] JoinCircuits []
   ⍤⤙≍ [0 1 4] JoinCircuits [□[0 1 4]]
@@ -74,11 +97,9 @@ InsertIntoCircuit ← (
   ⍤⤙≍ [□[2 3 6 7] □[0 1 4 5]] InsertIntoCircuit 6_7 [□[0 1 4 5] □[2 3 6]]
   ⍤⤙≍ [□[6 7]] InsertIntoCircuit 6_7 []
   ⍤⤙≍ [□[0 1 2 3 7 8 9] □[4 5 6]] InsertIntoCircuit 3_7 [□[0 1 2 3] □[4 5 6] □[7 8 9]]
+  ⍤⤙≍ {{[1_3 0_1]} [3_4 4_5]} {Loop {[0_1]} [1_3 3_4 4_5]}
+  ⍤⤙≍ {{[1_3 0_1 1_2 3_7]} [3_4 4_5]} {Loop {[0_1 1_2] [3_7]} [1_3 3_4 4_5]}
+  # ⍤⤙≍ {{[11_13] [0_1 1_2] [3_7]} [3_4 4_5]} {Loop {[0_1 1_2] [3_7]} [11_13 3_4 4_5]}
+  ⍤⤙≍ {{[1_6 0_1 1_2] [3_7]} [3_4 4_5]} {Loop {[0_1 1_2] [3_7]} [1_6 3_4 4_5]}
+  ⍤⤙≍ {[1_2 0_1 2_3]} ⊙◌ Loop {[0_1] [2_3]} [1_2]
 └─╴
-
-Part₁ ← (
-  ∧(InsertIntoCircuit) ShortestNConns!1000 []
-  /×↙₋₃⍆≡(⧻°□)
-)
-
-&p $"Part 1: _" Part₁
