@@ -2,3 +2,6 @@
 **/*.pdb
 **/*.obj
 **/*.exe
+.lsp
+.clj-kondo
+.calva
