@@ -27,13 +27,6 @@ ParseMachine₁ ← (
 ParseMachine₂ ← (
   ⊜(□) ⊸≠@ 
   ↘₁
-  °⊂
-  # ⊓(ParseButtons|ParseJoltage)
-)
-
-ParseMachine₂ ← (
-  ⊜(□) ⊸≠@ 
-  ↘₁
   ⊃(ParseJoltage°□⊡0↙₋₁)(ParseButtons ↘₋₁)
 )
 
@@ -42,13 +35,6 @@ ParseMachine₂ ← (
 # {0_2_3_4 2_3 0_4 0_1_2 1_2_3_4}
 # [0 0 0 1 0]
 ApplyButtons₁ ← ≡(˜⍜⊏¬⊙°□)¤
-
-# apply each button once ignoring overshoot
-# RemainingJoltages ? Buttons RemainingJoltage
-ApplyButtons₂ ← (
-  ≡⌟(◇⍜⊏(-1))   # apply each buttons once
-  ▽ ¬⊸(/↥ <0 ⍉) # keep only states not overshooting
-)
 
 # indicator buttons -> shortest paths
 # {0_2_3_4 2_3 0_4 0_1_2 1_2_3_4}
@@ -62,10 +48,7 @@ Part₁ ← (
   /+
 )
 
-# &p $"Part 1: _" Part₁
-
-# {3 1_3 2 2_3 0_2 0_1}
-# [3 5 0 7]
+&p $"Part 1: _" Part₁
 
 # Gives all combinations of 0 or 1 presses for given buttons.
 #
@@ -81,38 +64,34 @@ ApplyEachButton ← (
   ∧(◇⍜⊏(-1))
 )
 
-# check if joltage
-# MinPressCount RemainingJoltage ? PressCounts RemainingJoltages
-ReturnTarget ← (
-  ⊙⊸(≡(/↧=0)) # get index of target joltage
-  ⍣(
-    ⊢⍆˜▽      # get min button preses
-    ⊙(⍥0 ⊣ △) # return zero remaining joltage
-  )(⋅⊙∘)
-)
-
 # Finds all button presses necessary to reach even joltage
 # PressCounts EvenRemainingJoltages ? RemainingJoltage Buttons
 FindEvenJoltages ← memo(
-  ¬⊸(∨ ⊃(/↧ ¬ ◿2)(/↧(=0))) # 
-  ⨬([0] [∘]|(
-      ⊙ButtonCombos
-      ˜≡⌟(◇⊃(ApplyEachButton|⧻))
-      ⊸≡(×⊃(/↧ ¬ ◿2)(/↧(≥0)))
-      ⊃(▽ ⊙⋅∘)(▽ ⊙⊙◌)
-      ⨬([∞] ¤⍥(0)⊣△ ◌|⊙∘)⊸(≠0⧻) # if no paths were found, return infinity
-    )
-  )
+  ⤚(
+    ⊙ButtonCombos
+    ˜≡⌟(◇⊃(ApplyEachButton|⧻))
+    ⊸≡(×⊃(/↧ ¬ ◿2)(/↧(≥0)))
+    ⊃(▽ ⊙⋅∘)(▽ ⊙⊙◌)
+  )             # PressCounts EvenRemainingJoltages OriginalJoltage ? OriginalJoltage Buttons
+  ◡(⋅⋅(/↧ ¬◿2)) # if original joltage is already even
+  ⨬(⊙⊙◌|⊂0 ⊙˜⊂) # then add the joltage to the results
 )
 
-# PressCounts NewRemainingJoltage ? RemainingJoltage Buttons
-FindMinSteps₂ ← |2.2 (
+# PressCount ? RemainingJoltage Buttons
+FindMinSteps₂ ← |2 (
   ¬⊸(/↧=0) # did we already found the target?
-  ⨬(0 ∘    # early abort returning 0 steps
+  ⨬(0      # early abort returning 0 steps
   | (
-      ⊸FindEvenJoltages
-      + ⊙≡⌟(×2 FindMinSteps₂ ÷2)
-      ⊃(⊡ ⊙⊙◌|⊡ ⊙⋅∘) ⊸(⊢⍏)
+      ⊸FindEvenJoltages # PressCounts RemainingJoltages Buttons ? RemainingJoltage Buttons
+      ⊸(≠0⧻)            # check if paths were found
+      ⨬(∞               # no paths, return infinite press counts
+      | (
+          ⊙⊙¤ # we need to fix the buttons to prevent iterating over it
+          ≡(+ ⊙(×2 FindMinSteps₂ ÷2))
+          ⊢⍆
+          # ≡(□ ⊂ ⊙(×2 FindMinSteps₂ ÷2)) # debug
+        )
+      )
     )
   )
 )
@@ -122,15 +101,9 @@ Part₂ ← (
   SplitNewLines
   wait≡(
     ParseMachine₂ °□
-    pool(⊙◌ FindMinSteps₂)
+    poolFindMinSteps₂
   )
-  ⊸/+
+  /+
 )
 
-# &p $"Part 2: _" Part₂
-
-# Input
-# SplitNewLines
-# ⊡8
-# ParseMachine₂ °□
-# FindMinSteps₂
+&p $"Part 2: _" Part₂
