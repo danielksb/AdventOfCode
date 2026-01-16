@@ -17,18 +17,15 @@ RollsToRemove ← (
 )
 
 Part₁ ← (
-  Map
-  RollsToRemove
-  /⊂
-  /+
+  /+ ♭ RollsToRemove Map
 )
 
 Part₂ ← (
   Map
   ⊸⍥(>⊸RollsToRemove)∞
   >
-  /⊂
-  /+
+  /+ ♭
 )
 
-Part₂
+&p $"Part 1: _" Part₁
+&p $"Part 2: _" Part₂
