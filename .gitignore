@@ -6,3 +6,4 @@
 .clj-kondo
 .calva
 .vscode
+**/input.txt
